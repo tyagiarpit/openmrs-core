@@ -307,7 +307,11 @@ public class DatabaseUpdater {
 		for (Object key : runtimePropertyKeys) {
 			String prop = (String) key;
 			String value = (String) runtimeProperties.get(key);
-			log.trace("Setting property: " + prop + ":" + value);
+			//Do not print password in logs, instead print *********
+			if(prop!=null && !prop.toLowerCase().matches(".*password.*"))
+				log.trace("Setting property: " + prop + ":" + value);
+			else
+				log.trace("Setting property: " + prop + ":" + "**********");
 			if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop)) {
 				runtimeProperties.setProperty("hibernate." + prop, value);
 			}
